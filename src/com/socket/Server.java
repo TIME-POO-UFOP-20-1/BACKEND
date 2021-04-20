@@ -30,6 +30,16 @@ public class Server {
         }
     }
 
+    public void sendObject(Object object) {
+        try {
+            OutputStream outputStream = socket.getOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(object);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void getMessageFromClient(){
         try {
             //Get input stream from socket variable and convert the same to DataInputStream

@@ -6,7 +6,9 @@ import com.models.Usuario;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Main {
@@ -39,6 +41,10 @@ public class Main {
 
                     if (operation.equals("login")) {
                         handleLogin();
+                    }
+
+                    if (operation.equals("userList")) {
+                        handleUserList();
                     }
 
                 }else{
@@ -77,6 +83,15 @@ public class Main {
             server.sendConfirmation(false);
             System.out.println("Usuario já existe!");
         }
+    }
+
+    private static void handleUserList(){
+        users = ( List<Usuario>) name.getRecord(userPath);
+        Map<Character, String> mapUser = new HashMap<Character, String>();
+        for (Usuario x : users){
+            mapUser.put(x.getTipo(), x.getUsuario());
+        }
+        server.sendObject(mapUser);
     }
 
     private static void handleLogin() throws InterruptedException {
