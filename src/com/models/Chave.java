@@ -1,14 +1,14 @@
 package com.models;
 
-public class chave {
+public class Chave {
     //Define os atributos
     private String chave;
 
     //Construtor sem parâmetros
-    public chave(){}
+    public Chave(){}
 
     //Construtor com parâmetros
-    public chave(String chave){
+    public Chave(String chave){
         this.chave = chave;
     }
 
