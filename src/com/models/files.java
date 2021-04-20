@@ -2,7 +2,6 @@ package com.models;
 
 import java.io.*;
 
-
 public class files {
     private ObjectOutputStream output;
     private ObjectInputStream input;
@@ -18,6 +17,7 @@ public class files {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        closeFile();
     }
 
     public void setRecord(Object objeto, String path) throws IOException {
@@ -27,9 +27,10 @@ public class files {
             e.printStackTrace();
         }
         output.writeObject(objeto);
+        closeFile();
     }
 
-    public void closeFIle() {
+    public void closeFile() {
         if (output != null) {
             try {
                 output.close();
@@ -50,20 +51,16 @@ public class files {
         Object obj = null;
         try {
             FileInputStream fileIn = new FileInputStream(path);
-            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+            input = new ObjectInputStream(fileIn);
             try {
-                obj = objectIn.readObject();
+                obj = input.readObject();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            System.out.println("The Object has been read from the file");
-            objectIn.close();
+            closeFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return obj;
     }
-
-
-
 }

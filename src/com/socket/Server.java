@@ -21,6 +21,15 @@ public class Server {
         }
     }
 
+    public void sendConfirmation(boolean confirmation) {
+        try {
+            DataOutputStream  out = new DataOutputStream(socket.getOutputStream());
+            out.writeBoolean(confirmation);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void getMessageFromClient(){
         try {
             //Get input stream from socket variable and convert the same to DataInputStream

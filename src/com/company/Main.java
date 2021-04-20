@@ -5,10 +5,17 @@ import com.socket.Server;
 import com.models.usuario;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Main {
-    static Server server = new Server();
-    static files name = new files();
+    private static final Server server = new Server();
+    private static final files name = new files();
+    private static List<usuario> users = new ArrayList<>();
+    private static final String userPath = "src/com/files/users.bin";
+    private static final String employeesPath = "src/com/files/employees.bin";
+    private static final String appointmentsPath = "src/com/files/appointments.bin";
 
     public static void main(String[] args) throws InterruptedException {
         checkAndCreate();
@@ -48,16 +55,28 @@ public class Main {
         Thread.sleep(1000);
         server.getMessageFromClient();
         String senha = server.getMessage();
-        usuario user = new usuario(usuario, senha);
-        //user.setChave();
-        try {
-            name.setRecord(user, "users.bin");
-        } catch (IOException e) {
-            e.printStackTrace();
+        usuario user = new usuario(usuario, senha, 'G');
+        users = ( List<usuario>) name.getRecord(userPath);
+        boolean controle = true;
+        for (usuario x : users){
+            if (x.getUsuario().equals(usuario)) {
+                controle = false;
+                break;
+            }
         }
-        user = (com.models.usuario) name.getRecord("users.bin");
-        System.out.print(user.getUsuario());
-        System.out.print(user.getSenha());
+        if (controle) {
+            users.add(user);
+            try {
+                name.setRecord(users, userPath);
+                server.sendConfirmation(true);
+                System.out.println("Usuario cadastrado com sucesso!");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            server.sendConfirmation(false);
+            System.out.println("Usuario já existe!");
+        }
     }
 
     private static void handleLogin() throws InterruptedException {
@@ -67,21 +86,45 @@ public class Main {
         Thread.sleep(1000);
         server.getMessageFromClient();
         String senha = server.getMessage();
-        usuario user = new usuario(usuario, senha);
-        user.setChave(usuario);
+        usuario user;
+        users = ( List<usuario>) name.getRecord(userPath);
+        boolean controle = false;
+        for (usuario x : users){
+            if (x.getUsuario().equals(usuario)) {
+                if (x.getSenha().equals(senha)) {
+                    user = x;
+                    controle = true;
+                    break;
+                }
+            }
+        }
+        if (controle) {
+            server.sendConfirmation(true);
+            System.out.println("Usuario autenticado!");
+        }else{
+            server.sendConfirmation(false);
+            System.out.println("Usuario não autenticado!");
+        }
     }
 
     private static void checkAndCreate(){
-        if (!name.existe("users.bin")){
-            name.create("users.bin");
+        if (!name.existe(userPath)){
+            name.create(userPath);
+            usuario admin = new usuario("admin", "admin", 'A');
+            users.add(admin);
+            try {
+                name.setRecord(users, userPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        if (!name.existe("employees.bin")){
-            name.create("employees.bin");
+        if (!name.existe(employeesPath)){
+            name.create(employeesPath);
         }
 
-        if (!name.existe("appointments.bin")){
-            name.create("appointments.bin");
+        if (!name.existe(appointmentsPath)){
+            name.create(appointmentsPath);
         }
     }
 }
