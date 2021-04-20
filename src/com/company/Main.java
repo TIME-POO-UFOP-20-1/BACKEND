@@ -86,9 +86,9 @@ public class Main {
     }
 
     private static void handleUserList(){
-        users = ( List<usuario>) name.getRecord(userPath);
+        users = ( List<Usuario>) name.getRecord(userPath);
         Map<Character, String> mapUser = new HashMap<Character, String>();
-        for (usuario x : users){
+        for (Usuario x : users){
             mapUser.put(x.getTipo(), x.getUsuario());
         }
         server.sendObject(mapUser);
