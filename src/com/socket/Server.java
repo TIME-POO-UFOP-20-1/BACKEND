@@ -68,7 +68,9 @@ public class Server {
     }
 
     public String getMessage(){
-        return message;
+        String buffer = message;
+        message = null; 
+        return buffer;
     }
 
 }

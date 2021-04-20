@@ -19,6 +19,6 @@ public class chave {
 
     //Getter de chave
     public String getChave(){
-        return chave;
+        return this.chave;
     }
 }
