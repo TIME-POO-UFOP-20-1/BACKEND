@@ -2,22 +2,22 @@ package com.models;
 
 import java.io.Serializable;
 
-public class usuario extends chave implements Serializable {
+public class Usuario extends Chave implements Serializable {
     //Define atributos da classe
     private String usuario;
     private String senha;
     private char tipo;
-    private chave chave;
+    private Chave chave;
 
     //Contrutores
-    public usuario(){}
+    public Usuario(){}
 
-    public usuario(String usuario, String senha){
+    public Usuario(String usuario, String senha){
         this.usuario = usuario;
         this.senha = senha;
     }
 
-    public usuario(String usuario, String senha, char tipo){
+    public Usuario(String usuario, String senha, char tipo){
         this.usuario = usuario;
         this.senha = senha;
         this.tipo = tipo;
