@@ -2,7 +2,7 @@ package com.company;
 
 import com.models.files;
 import com.socket.Server;
-import com.models.usuario;
+import com.models.Usuario;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
 public class Main {
     private static final Server server = new Server();
     private static final files name = new files();
-    private static List<usuario> users = new ArrayList<>();
+    private static List<Usuario> users = new ArrayList<>();
     private static final String userPath = "src/com/files/users.bin";
     private static final String employeesPath = "src/com/files/employees.bin";
     private static final String appointmentsPath = "src/com/files/appointments.bin";
@@ -55,10 +55,10 @@ public class Main {
         Thread.sleep(1000);
         server.getMessageFromClient();
         String senha = server.getMessage();
-        usuario user = new usuario(usuario, senha, 'G');
-        users = ( List<usuario>) name.getRecord(userPath);
+        Usuario user = new Usuario(usuario, senha, 'G');
+        users = ( List<Usuario>) name.getRecord(userPath);
         boolean controle = true;
-        for (usuario x : users){
+        for (Usuario x : users){
             if (x.getUsuario().equals(usuario)) {
                 controle = false;
                 break;
@@ -86,10 +86,10 @@ public class Main {
         Thread.sleep(1000);
         server.getMessageFromClient();
         String senha = server.getMessage();
-        usuario user;
-        users = ( List<usuario>) name.getRecord(userPath);
+        Usuario user;
+        users = ( List<Usuario>) name.getRecord(userPath);
         boolean controle = false;
-        for (usuario x : users){
+        for (Usuario x : users){
             if (x.getUsuario().equals(usuario)) {
                 if (x.getSenha().equals(senha)) {
                     user = x;
@@ -110,7 +110,7 @@ public class Main {
     private static void checkAndCreate(){
         if (!name.existe(userPath)){
             name.create(userPath);
-            usuario admin = new usuario("admin", "admin", 'A');
+            Usuario admin = new Usuario("admin", "admin", 'A');
             users.add(admin);
             try {
                 name.setRecord(users, userPath);
