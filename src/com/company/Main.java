@@ -5,10 +5,7 @@ import com.socket.Server;
 import com.models.Usuario;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class Main {
@@ -87,11 +84,11 @@ public class Main {
 
     private static void handleUserList(){
         users = ( List<Usuario>) name.getRecord(userPath);
-        Map<Character, String> mapUser = new HashMap<Character, String>();
+        List<String> userList = new ArrayList<>();
         for (Usuario x : users){
-            mapUser.put(x.getTipo(), x.getUsuario());
+            userList.add(x.getUsuario());
         }
-        server.sendObject(mapUser);
+        server.sendObject(userList);
     }
 
     private static void handleLogin() throws InterruptedException {
