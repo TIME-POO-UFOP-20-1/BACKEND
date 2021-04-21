@@ -2,7 +2,7 @@ package com.models;
 
 import java.util.ArrayList;
 
-public class Folhadeponto {
+public class Folhadeponto extends Chave{
     // Definindo os atributos
     private Chave chave;
     private ArrayList<String> observacao;
