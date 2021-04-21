@@ -4,13 +4,15 @@ public class Funcionario extends Pessoa{
     //Define atributos da classe
     private char tipo;
     private Pessoa pessoa;
+    private double salario;
 
     //Contrutores
     public Funcionario(){};
-    public Funcionario(String nome, String cpf, char tipo){
+    public Funcionario(String nome, String cpf, char tipo, double salario){
         this.pessoa.setNome(nome);
         this.pessoa.setCPF(cpf);
         this.tipo = tipo;
+        this.salario = salario;
     }
 
     //Setters
@@ -26,6 +28,10 @@ public class Funcionario extends Pessoa{
         this.tipo = tipo;
     }
 
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
     //Getters
     public String getNome(){
         return this.pessoa.getNome();
@@ -37,6 +43,10 @@ public class Funcionario extends Pessoa{
 
     public char getTipo(){
         return this.tipo;
+    }
+
+    public double getSalario(){
+        return this.salario;
     }
 
     //Settergs e Getters da chave da classe Chave
